@@ -59,7 +59,7 @@ ed%
 
 ## Prior art
 
-[repl(1)](https://github.com/defunkt/repl) by [Chris Wanstrath](https://github.com/defunkt)
+[`repl(1)`](https://github.com/defunkt/repl) by [Chris Wanstrath](https://github.com/defunkt)
 
 ## License
 MIT © [Anirudh Oppiliappan](https://icyphox.sh)
