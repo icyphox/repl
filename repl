@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+show_help() {
+	echo "Usage: repl [options] command"
+	echo ""
+	echo "Options:"
+	echo "    --help/-h    Display this message"
+	echo "    --stdin      Pipe input to command's stdin"
+	echo ""
+	echo "Examples:"
+	echo "    $ repl git"
+	echo "    $ repl --stdin bc"
+}
+
+if [ $# -lt 1 ]
+then
+	show_help
+	exit
+else
+	cmd="$@"
+fi
+
+for arg in $@
+do
+	case $arg in
+		--stdin )
+			export stdin=true;
+			shift;;
+		--help|-h )
+			show_help
+			exit 1;;
+	esac
+done
+
+storage="$HOME/.repl"
+[[ ! -d "$storage" ]] &&
+	mkdir "$storage"
+
+[[ ! -e "$storage/$1.hist" ]] &&
+	touch "$storage/$1.hist"
+
+if [ -x "$(command -v rlwrap)" ] && [ -z "$USING_RLWRAP" ]
+then
+	export USING_RLWRAP=1
+	rlargs="-H $storage/$@.hist"
+	exec rlwrap $rlargs $0 $@
+fi
+
+while :
+do
+	read -p "$cmd% " input
+	if [ "$stdin" == true ]
+	then
+		out=$(eval "echo $input | $cmd")
+	else
+		out=$(eval "$cmd $input")
+	fi
+	echo "$out"
+done
