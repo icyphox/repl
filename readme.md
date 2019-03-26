@@ -13,7 +13,8 @@
 
 Assuming `$HOME/bin` is in your `$PATH`,
 ```console
-curl -s https://raw.githubusercontent.com/icyphox/repl/master/repl -o bin/repl
+curl -s https://raw.githubusercontent.com/icyphox/repl/master/repl -o $HOME/bin/repl
+chmod +x $HOME/bin/repl
 ```
 
 ## Usage
