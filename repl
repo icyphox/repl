@@ -46,6 +46,7 @@ then
 	exec rlwrap $rlargs $0 $@
 fi
 
+echo "Use Ctrl+C to quit"
 while :
 do
 	read -p "$cmd% " input
