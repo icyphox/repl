@@ -5,6 +5,10 @@
 - Command history (cycle with arrow keys)
 - It's epic
 
+## Requirements
+- `bash`
+- `rlwrap` (optional, needed for history)
+
 ## Installation
 
 Assuming `$HOME/bin` is in your `$PATH`,
