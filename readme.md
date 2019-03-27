@@ -20,7 +20,7 @@ chmod +x $HOME/bin/repl
 
 ## Usage
 
-It's simple, just `repl <command>`.
+It's simple, just `repl <command>`:
 
 ```console
 $ repl git
@@ -31,7 +31,7 @@ origin  git@github.com:icyphox/asdf (fetch)
 origin  gitgit@github.com:icyphox/asdf (push)
 ```
 
-Or, pipe it to STDIN — `repl --stdin <command>`.
+Or, pipe it to STDIN — `repl --stdin <command>`:
 
 ```console
 $ repl --stdin cat
@@ -41,14 +41,14 @@ cat% fortnite bad, mc good
 fornite bad, mc good
 ```
 
-Reverse-search using by hitting `Ctrl+R`.
+Reverse-search by hitting `Ctrl+R`:
 
 ```console
 $ repl pip3
 (reverse-i-search)`li': list
 ```
 
-And here's `repl` being used with `ed(1)` :)
+And here's `repl` for `ed(1)` :)
 
 ```console
 $ repl --stdin ed
