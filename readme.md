@@ -3,6 +3,7 @@
 
 ## Features
 - Command history (cycle with arrow keys)
+- Reverse-search using `Ctrl+R`
 - It's epic
 
 ## Requirements
@@ -28,7 +29,6 @@ git% branch
 git% remote -v
 origin  git@github.com:icyphox/asdf (fetch)
 origin  gitgit@github.com:icyphox/asdf (push)
-git% 
 ```
 
 Or, pipe it to STDIN — `repl --stdin <command>`.
@@ -40,6 +40,14 @@ yeet
 cat% fortnite bad, mc good
 fornite bad, mc good
 ```
+
+Reverse-search using by hitting `Ctrl+R`.
+
+```console
+$ repl pip3
+(reverse-i-search)`li': list
+```
+
 And here's `repl` being used with `ed(1)` :)
 
 ```console
@@ -54,8 +62,6 @@ ed% i
 
 ed% doing
 ?
-
-ed% 
 ```
 
 ## Prior art
