@@ -42,14 +42,14 @@ storage="$HOME/.repl"
 if [ -x "$(command -v rlwrap)" ] && [ -z "$USING_RLWRAP" ]
 then
 	export USING_RLWRAP=1
-	rlargs="-H $storage/$@.hist"
+	rlargs="-H $storage/$1.hist"
 	exec rlwrap $rlargs $0 $@
 fi
 
 echo "Use Ctrl+C to quit"
 while :
 do
-	read -p "$cmd% " input
+	read -p "$1% " input
 	if [ "$stdin" == true ]
 	then
 		out=$(eval "echo $input | $cmd")
