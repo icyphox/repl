@@ -17,7 +17,7 @@ then
 	show_help
 	exit
 else
-	cmd="$@"
+	cmd="script -q /dev/null $@"
 fi
 
 for arg in $@
