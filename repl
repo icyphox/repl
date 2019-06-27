@@ -12,49 +12,46 @@ show_help() {
 	echo "    $ repl --stdin bc"
 }
 
-if [ $# -lt 1 ]
+if [ "$#" -lt 1 ]
 then
 	show_help
 	exit
-else
-	cmd="script -q /dev/null $@"
 fi
 
-for arg in $@
+cmd=()
+
+for arg
 do
 	case $arg in
 		--stdin )
-			export stdin=true;
-			shift;;
+			stdin=1;;
 		--help|-h )
 			show_help
 			exit 1;;
+		* )
+			# We use printf to quote everything because we eval this later and don't want things being expanded twice
+			cmd+=("$(printf '%q' "$arg")");;
 	esac
 done
 
 storage="$HOME/.repl"
-[[ ! -d "$storage" ]] &&
-	mkdir "$storage"
+mkdir -p "$storage"
 
-[[ ! -e "$storage/$1.hist" ]] &&
-	touch "$storage/$1.hist"
-
-if [ -x "$(command -v rlwrap)" ] && [ -z "$USING_RLWRAP" ]
+if command -v rlwrap 2>&1 >/dev/null && [ -z "$USING_RLWRAP" ]
 then
 	export USING_RLWRAP=1
-	rlargs="-H $storage/$1.hist"
-	exec rlwrap $rlargs $0 $@
+	rlwrap_cmd=(rlwrap -H "$storage/$1.hist" -- "$0" "$@")
+	exec "${rlwrap_cmd[@]}"
 fi
 
-echo "Use Ctrl+C to quit"
-while :
+echo "Use Ctrl+C or Ctrl+D to quit"
+
+if [ -n "$stdin" ]; then
+	exec "${cmd[@]}"
+fi
+
+while read -r -p "$1% " input
 do
-	read -p "$1% " input
-	if [ "$stdin" == true ]
-	then
-		out=$(eval "echo $input | $cmd")
-	else
-		out=$(eval "$cmd $input")
-	fi
-	echo "$out"
+	# eval is evil, but we use it here because $input needs expanded by the shell
+	eval "${cmd[@]}" "$input"
 done
